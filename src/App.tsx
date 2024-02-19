@@ -1,10 +1,11 @@
 import './App.css'
+import Add from './containers/Add'
 
 function App() {
 
   return (
     <div>
-      app
+      <Add />
     </div>
   )
 }
