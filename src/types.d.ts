@@ -4,3 +4,7 @@ export interface Meal {
     description: string,
     calories: number
 }
+
+export interface Meals {
+    [id: string]: Meal
+}

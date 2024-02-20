@@ -2,6 +2,7 @@ import axiosApi from "../AxiosApi";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { Meal } from "../types";
+import { useNavigate } from "react-router-dom";
 
 const Add: React.FC = () => {
     const [formData, setFormData] = useState<Meal>({
@@ -10,6 +11,8 @@ const Add: React.FC = () => {
         description: "",
         calories: 0
     });
+    const navigate = useNavigate()
+    const [submit, setSumbit] = useState(false)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const target = e.target;
@@ -32,10 +35,15 @@ const Add: React.FC = () => {
                 description: "",
                 calories: 0
             })
+            setSumbit(true)
 
         } catch (e) {
             console.log(e);
         }
+    }
+
+    if (submit) {
+        return navigate('/')
     }
 
     return (
