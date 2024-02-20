@@ -1,6 +1,6 @@
 import axiosApi from "../AxiosApi";
 import { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Spinner } from "react-bootstrap";
 import { Meal } from "../types";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +13,7 @@ const Add: React.FC = () => {
     });
     const navigate = useNavigate()
     const [submit, setSumbit] = useState(false)
+    const [submitSpinner, setSubmitSpinner] = useState(false)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const target = e.target;
@@ -26,6 +27,7 @@ const Add: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setSubmitSpinner(true)
 
         try {
             await axiosApi.post('/meal.json', formData);
@@ -66,7 +68,14 @@ const Add: React.FC = () => {
                     <Form.Label>Enter calories</Form.Label>
                     <Form.Control type="number" name="calories" onChange={handleChange} value={formData.calories} />
                 </Form.Group>
-                <Button type="submit" variant="success mt-4">Success</Button>
+                <Button type="submit" variant="success mt-4">
+                    {submitSpinner ? (
+                        <Spinner animation="border" size="sm" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                    ) : (
+                        "Submit"
+                    )}</Button>
             </Form>
         </main>
     );
